@@ -6,7 +6,7 @@
 ```bash
 nmap -p- --open --min-rate 5000 -sS -vvv -n -Pn 10.129.233.119 -oN escaner
 ```
-![Nmap1](Networked_images/Pasted image 20250619153823.png)
+![Nmap1](Networked_images/Imagen%20pegada%2020250619153823.png)
 
 
 ## escaneo con script nmap 
