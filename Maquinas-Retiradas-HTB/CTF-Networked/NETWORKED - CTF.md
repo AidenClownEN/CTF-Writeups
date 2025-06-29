@@ -155,7 +155,7 @@ mv camel1.jpeg camel1.php.jpeg
 
 >Igual que antes vamos a /upload.php subimos la foto y comprobamos que esta en /photos.php
 
-![[Pasted image 20250619160709.png]](Networked_images/220250619160709.png)
+![[Pasted image 20250619160709.png]](Networked_images/20250619160709.png)
 
 ### Tratamos de ejecutar comandos por GET
 
