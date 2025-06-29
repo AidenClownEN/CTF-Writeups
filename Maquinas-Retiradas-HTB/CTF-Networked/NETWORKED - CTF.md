@@ -14,7 +14,7 @@ nmap -p- --open --min-rate 5000 -sS -vvv -n -Pn 10.129.233.119 -oN escaner
 nmap -p22,80 -sCV 10.129.233.119 -oN targeted
 ```
 
-![[Pasted image 20250619154031.png]]
+![20250619154031](Networked_images/20250619154031.png)
 
 ![[Pasted image 20250619154118.png]]
 
