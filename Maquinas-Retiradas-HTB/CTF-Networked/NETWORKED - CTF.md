@@ -6,7 +6,7 @@
 ```bash
 nmap -p- --open --min-rate 5000 -sS -vvv -n -Pn 10.129.233.119 -oN escaner
 ```
-![Nmap](Networked_images/2020250619153823.png)
+![Nmap](Maquinas-Retiradas-HTB/CTF-Networked/Networked_images/20250619153823.png)
 
 
 ## escaneo con script nmap 
