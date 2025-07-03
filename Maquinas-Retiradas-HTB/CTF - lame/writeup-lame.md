@@ -8,7 +8,7 @@
  nmap -p- --open --min-rate 5000 -sS -vvv -n -Pn 10.129.199.205 -oN scanner
 ```
 
-![[Pasted image 20250703203613.png]]
+![[Pasted image 20250703203613.png]](lame-imagenes/lame-images/20250703203613.png)
 
 >Identificamos los puertos 21, 22, 139, 445, 3632
 
