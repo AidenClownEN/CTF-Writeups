@@ -231,6 +231,7 @@ la primera se encuentra en /home/makis/user.txt
 ![[Pasted image 20250703220257.png]](lame-imagenes/lame-images/20250703220257.png)
 
 Y la del usuario root se encuentra en /root/root.txt
+
 ![[Pasted image 20250703220343.png]](lame-imagenes/lame-images/20250703220343.png)
 
 # Banderas
