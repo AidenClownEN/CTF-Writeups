@@ -1,4 +1,4 @@
-![[Pasted image 20250703203426.png]]
+![[20250703203426.png]](lame-imagenes/lame-images/20250703203426.png)
 
 # Nmap
 
