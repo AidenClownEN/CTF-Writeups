@@ -1,4 +1,4 @@
-![[Pasted image 20250705153021.png]]
+![[Pasted image 20250705153021.png]](bashed-images/20250705153021.png)
 
 # Nmap
 
