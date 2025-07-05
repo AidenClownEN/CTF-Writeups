@@ -8,7 +8,7 @@
 nmap -p- --open --min-rate 5000 -sS -vvv -n -Pn 10.129.197.9 -oN scanner
 ```
 
-![[20250705135441.png]]
+![[20250705135441.png]](bashed-images/20250705135441.png)
 
 >Continuamos con un escáner con scripts básicos para sacar servicios y versiones
 
