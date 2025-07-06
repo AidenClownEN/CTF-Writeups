@@ -1,5 +1,5 @@
 
-![[ 20250706131558.png]]
+![[ 20250706131558.png]](jerry-images/20250706131558.png)
 # NMAP
 
 Realizamos un escaneo básico de nmap para ver los puertos abiertos
