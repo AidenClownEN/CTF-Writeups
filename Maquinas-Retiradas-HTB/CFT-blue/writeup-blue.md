@@ -9,7 +9,7 @@ empezamos con un escaneo de puertos básicos con nmap
 nmap -p- --open --min-rate 5000 -sS -n -Pn 10.129.211.94 -oN scanner
 ```
 
-![[ 20250709103640.png]]
+![[ 20250709103640.png]](blue-images/20250709103640.png)
 
 seguimos con un escaneo de servicios y versiones con nmap
 
@@ -17,19 +17,19 @@ seguimos con un escaneo de servicios y versiones con nmap
 nmap -p135,139,445,49152,49153,49154,49155,49156,49157 -sCV 10.129.211.94 -oN targeted
 ```
 
-![[ 20250709103734.png]]
+![[ 20250709103734.png]](blue-images/20250709103734.png)
 
 aqui ya podemos ver la version windows 7 professional y vemos un usuario haris
 
 # Autorecon
 
-![[ 20250709103919.png]]
+![[ 20250709103919.png]](blue-images/20250709103919.png)
 
 vemos el resultado de _full_tcp_nmap.txt_ y comprobamos que esta corriendo `Microsoft Windows 7|2008|8.1|2012|Vista|2016|10`
 
 buscamos informacion en google
 
-![[ 20250709104045.png]]
+![[ 20250709104045.png]](blue-images/20250709104045.png)
 
 vemos que puede ser vulnerable a varias cosas asi que veamos con nmap scripts si nuestra victima es vulnerable
 
@@ -41,7 +41,7 @@ lo primero es ver que scripts tenemos disponibles en nmap
 ls /usr/share/nmap/scripts/ | grep smb
 ```
 
-![[ 20250709104221.png]]
+![[ 20250709104221.png]](blue-images/20250709104221.png)
 
 vemos varias pero las señaladas son las mas interesantes debido el resultado de la búsqueda en google
 
@@ -51,7 +51,7 @@ probamos
 nmap -p445 --script smb-vuln-ms10-061,smb-vuln-ms10-054,smb-vuln-ms17-010 -sV 10.129.211.94
 ```
 
-![[ 20250709104411.png]]
+![[ 20250709104411.png]](blue-images/20250709104411.png)
 
 vemos que es vulnerable a la vulnerabilidad `ms17-010`
 
@@ -69,7 +69,7 @@ buscamos por la vulnerabilidad ms17-010
 search ms17-010
 ```
 
-![[ 20250709104602.png]]
+![[ 20250709104602.png]](blue-images/20250709104602.png)
 
 podemos ver varios resultados
 
@@ -91,7 +91,7 @@ con esto listo lanzamos el exploit
 exploit
 ```
 
-![[ 20250709104843.png]]
+![[ 20250709104843.png]](blue-images/20250709104843.png)
 
 conseguimos una terminal como meterpreter con privilegios absolutos
 
@@ -101,14 +101,14 @@ conseguimos una terminal como meterpreter con privilegios absolutos
 
 en el directorio `C:\Users\Administrator\Desktop` encontramos `root.txt`
 
-![[ 20250709105020.png]]
+![[ 20250709105020.png]](blue-images/20250709105020.png)
 
 root : fb20701fe3f28b9fbffcb452c7d6434a
 ## User
 
 en el directorio `C:\Users\haris\Desktop` encontramos `user.txt`
 
-![[ 20250709105122.png]]
+![[ 20250709105122.png]](blue-images/20250709105122.png)
 
 user : 894ecdaf91fbd5713acf4fb76827d805
 
