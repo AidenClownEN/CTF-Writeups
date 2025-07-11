@@ -9,7 +9,7 @@ hacemos un escaneo basico de puertos en nmap
 nmap -p- --open --min-rate 5000 -sS -vvv -n -Pn 10.129.96.84 -oN scanner
 ```
 
-![[ 20250711113527.png]]
+![[ 20250711113527.png]](nibbles-images/20250711113527.png)
 
 una vez identificados los puertos hacemos un escaneo con scripts para ver servicios y versiones 
 
@@ -17,11 +17,11 @@ una vez identificados los puertos hacemos un escaneo con scripts para ver servic
 nmap -p22,80 -sCV 10.129.96.84 -oN targeted
 ```
 
-![[ 20250711113803.png]]
+![[ 20250711113803.png]](nibbles-images/20250711113803.png)
 
 # Puerto 80
 
-![[ 20250711113852.png]]
+![[ 20250711113852.png]](nibbles-images/20250711113852.png)
 
 entramos en la web y vemos un cartel de "hola mundo"
 
@@ -29,10 +29,10 @@ entramos en la web y vemos un cartel de "hola mundo"
 
 Utilizamos burpsuite para hacer un escaneo de la pagina web 
 
-![[ 20250711113948.png]]
+![[ 20250711113948.png]](nibbles-images/20250711113948.png)
 
 vemos que hay un directorio llamado nibbleblog que contiene varias cosas
-![[ 20250711114019.png]]
+![[ 20250711114019.png]](nibbles-images/20250711114019.png)
 
 ## WFUZZ 
 
@@ -41,7 +41,7 @@ utilizamos wfuzz en terminal para ver todo lo que contiene ese directorio por si
 ```bash
 wfuzz -c -w /usr/share/wordlists/dirb/common.txt --hc 404 http://10.129.96.84/nibbleblog/FUZZ
 ```
-![[ 20250711114144.png]]
+![[ 20250711114144.png]](nibbles-images/20250711114144.png)
 
 vemos cositas interesantes
 - admin.php
@@ -53,7 +53,7 @@ vamos a investigar un poco sobre todo esto
 
 ### Admin.php 
 
-![[ 20250711114245.png]]
+![[ 20250711114245.png]](nibbles-images/20250711114245.png)
 
 vemos un panel de login pero desconocemos las credenciales, probe a hacer un ataque diccionario pero se activa una black list por lo que no podemos realizar fuerza bruta contra el panel, debemos encontrar credenciales en otra parte
 
@@ -61,36 +61,36 @@ vemos un panel de login pero desconocemos las credenciales, probe a hacer un ata
 
 buscamos en el directorio de contenido a ver que encontramos
 
-![[ 20250711114416.png]]
+![[ 20250711114416.png]](nibbles-images/20250711114416.png)
 
 accedemos a la parte privada del contenido donde suponemos que estara lo mas interesante
 
 
-![[ 20250711114501.png]]
+![[ 20250711114501.png]](nibbles-images/20250711114501.png)
 
 encontramos config.xml, la carpeta de plugins y users.xml
 
 #### users.xml
 
-![[ 20250711114553.png]]
+![[ 20250711114553.png]](nibbles-images/20250711114553.png)
 
 entendemos que el usuario es admin
 
 #### config.xml
 
-![[ 20250711114633.png]]
+![[ 20250711114633.png]](nibbles-images/20250711114633.png)
 
 aqui vemos el nombre nibbles y el correo admin@nibbles.com
 
 tratemos de entrar en la pagina de login con credenciales admin:nibbles
 
-![[ 20250711114742.png]]
+![[ 20250711114742.png]](nibbles-images/20250711114742.png)
 
 Como no se ve la contraseña voy a modificar el codigo html para que el writeup sea fiable y comprobemos todos que realmente funciona
 
-![[ 20250711114930.png]]
+![[ 20250711114930.png]](nibbles-images/20250711114930.png)
 
-![[ 20250711114948.png]]
+![[ 20250711114948.png]](nibbles-images/20250711114948.png)
 
 confirmamos que la contraseña es nibbles
 
@@ -100,11 +100,11 @@ y tenemos un panel de control de administrador
 
 tratemos de conseguir una shell, accedemos a la carpeta plugins y vamos a instalar un nuevo plugin
 
-![[ 20250711115134.png]]
+![[ 20250711115134.png]](nibbles-images/20250711115134.png)
 
 Decido instalar about por que me permite cargar una imagen que trataremos de envenenar
 
-![[ 20250711115232.png]]
+![[ 20250711115232.png]](nibbles-images/20250711115232.png)
 
 creamos un archivo .php en nuestro equipo con los magic numbers de png 
 
@@ -119,27 +119,27 @@ luego con nano modificamos el php para inyectarle lo siguiente
 ```
 
 
-![[ 20250711115330.png]]
+![[ 20250711115330.png]](nibbles-images/20250711115330.png)
 
 una vez tenemos esto vamos a subirlo a la pagina web
 
-![[ 20250711115611.png]]
+![[ 20250711115611.png]](nibbles-images/20250711115611.png)
 
 al subir el archivo vemos un montón de errores y una ventanita que confirma los cambios realizados
 
 volvemos al directorio http://10.129.96.84/nibbleblog/content/private/plugins/
 
-![[ 20250711115722.png]]
+![[ 20250711115722.png]](nibbles-images/20250711115722.png)
 
-![[ 20250711115737.png]]
+![[ 20250711115737.png]](nibbles-images/20250711115737.png)
 
 vemos que se ha creado el archivo profile_picture.php
 
-![[ 20250711115806.png]]
+![[ 20250711115806.png]](nibbles-images/20250711115806.png)
 
 probamos una inyección en este archivo php
 
-![[ 20250711115843.png]]
+![[ 20250711115843.png]](nibbles-images/20250711115843.png)
 
 vemos que devuelve el id por lo que tenemos web shell
 
@@ -155,9 +155,9 @@ nos ponemos en escucha en el puerto seleccionado 443
 nc -nlvp 443
 ```
 
-![[ 20250711120612.png]]
+![[ 20250711120612.png]](nibbles-images/20250711120612.png)
 
-![[ 20250711120626.png]]
+![[ 20250711120626.png]](nibbles-images/20250711120626.png)
 
 ## Tratamos la shell
 
@@ -185,7 +185,7 @@ stty rows 40 columns 140
 
 ahora mismo somos usuario nibbler
 
-![[ 20250711121003.png]]
+![[ 20250711121003.png]](nibbles-images/20250711121003.png)
 
 en el directorio personal de nibbler vemos la flag y un .zip
 
@@ -195,7 +195,7 @@ vemos si podemos ejecutar algo sin contraseña
 sudo -l
 ```
 
-![[ 20250711121102.png]]
+![[ 20250711121102.png]](nibbles-images/20250711121102.png)
 
 vemos que podemos ejecutar el programa monitor.sh como root, pero tenemos que descomprimir el zip
 
@@ -203,11 +203,11 @@ vemos que podemos ejecutar el programa monitor.sh como root, pero tenemos que de
 unzip personal.zip
 ```
 
-![[ 20250711121215.png]]
+![[ 20250711121215.png]](nibbles-images/20250711121215.png)
 
 abrimos el programa .sh para ver que hace
 
-![[ 20250711121300.png]]
+![[ 20250711121300.png]](nibbles-images/20250711121300.png)
 
 modificamos el codigo ya que tenemos permiso de ejecución como root tratamos de lanzar una shell 
 
@@ -217,7 +217,7 @@ lo primero damos permisos de ejecucion al programa
 chmod +x monitor.sh
 ```
 
-![[ 20250711121428.png]]
+![[ 20250711121428.png]](nibbles-images/20250711121428.png)
 
 ejecutamos el programa con sudo
 
@@ -225,7 +225,7 @@ ejecutamos el programa con sudo
 sudo ./monitor.sh
 ```
 
-![[ 20250711121651.png]]
+![[ 20250711121651.png]](nibbles-images/20250711121651.png)
 
 # Flags
 
