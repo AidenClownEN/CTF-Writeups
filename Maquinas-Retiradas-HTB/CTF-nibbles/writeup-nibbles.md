@@ -231,6 +231,7 @@ sudo ./monitor.sh
 
 ## Nibbler
 en el directorio /home/nibbler tenemos la flag user.txt
+
 user : 10d950ad1cab4790a644a7619ca98ff7
 
 ## root
