@@ -1,3 +1,6 @@
+
+![[ 20250719142538.png]](beep-images/20250719142538.png)
+
 # NMAP
 
 primero realizamos un escaneo de nmap. pero en este caso a diferencia de mis otros writeups vamos a cambiar el método
