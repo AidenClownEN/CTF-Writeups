@@ -1,5 +1,5 @@
 
-![[ 20250720125841.png]]
+![[ 20250720125841.png]](granny-images/20250720125841.png)
 
 # NMAP
 
@@ -15,13 +15,13 @@ ahora realizamos un segundo escaneo con scripts básicos de nmap para sacar serv
 nmap -p80 -sCV 10.129.182.8 -oN targeted
 ```
 
-![[ 20250720130200.png]]
+![[ 20250720130200.png]](granny-images/20250720130200.png)
 
 aqui vemos el servicio y version del puerto 80 en este caso `Microsoft IIS httpd 6.0`
 
 buscamos en google para ver que encontramos 
 
-![[ 20250720130254.png]]
+![[ 20250720130254.png]](granny-images/20250720130254.png)
 
 aqui podemos ver que la maquina es vulnerable al  `CVE-2017-7269`
 
@@ -41,7 +41,7 @@ hacemos una busqueda de exploits con la vulnerabilidad
 search CVE-2017-7269
 ```
 
-![[ 20250720130510.png]]
+![[ 20250720130510.png]](granny-images/20250720130510.png)
 
 utilizamos el exploit encontrado
 
@@ -76,13 +76,13 @@ y lanzamos el exploit
 epxloit
 ```
 
-![[ 20250720130753.png]]
+![[ 20250720130753.png]](granny-images/20250720130753.png)
 
 conseguimos shell como meterpreter
 
 Al tratar de entrar en la carpeta de administrador vemos que no tenemos permisos
 
-![[ 20250720130822.png]]
+![[ 20250720130822.png]](granny-images/20250720130822.png)
 
 # escalada de privilegios
 
@@ -96,7 +96,7 @@ run post/multi/recon/local_exploit_suggester
 
 Esta herramienta hará un escaneo de vulnerabilidades para escalada de privilegios en el localhosts de la maquina victima
 
-![[ 20250720131113.png]]
+![[ 20250720131113.png]](granny-images/20250720131113.png)
 
 aqui nos sugiere utilizar algunos exploits 
 
@@ -106,7 +106,7 @@ para poder utilizarlos tendremos que migrar a algún servicio con permisos para 
 ps
 ```
 
-![[ 20250720131527.png]]
+![[ 20250720131527.png]](granny-images/20250720131527.png)
 
 en mi caso utilizare este con ID 1896
 
@@ -145,7 +145,7 @@ lanzamos el exploit
 exploit
 ```
 
-![[ 20250720132103.png]]
+![[ 20250720132103.png]](granny-images/20250720132103.png)
 
 y obtenemos meterpreter con privilegios
 
@@ -153,7 +153,7 @@ y obtenemos meterpreter con privilegios
 
 ## User 
 
-![[ 20250720132212.png]]
+![[ 20250720132212.png]](granny-images/20250720132212.png)
 
 la flag esta en el directorio : C:\Documents and Settings\Lakis\Desktop
 
@@ -161,7 +161,7 @@ user : 700c5dc163014e22b3e408f8703f67d1
 
 ## Root
 
-![[ 20250720132305.png]]
+![[ 20250720132305.png]](granny-images/20250720132305.png)
 
 la flag esta en el directorio : C:\Documents and Settings\Administrator\Desktop
 
