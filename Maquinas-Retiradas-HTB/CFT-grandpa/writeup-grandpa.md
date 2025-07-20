@@ -12,7 +12,7 @@ Lo primero es hacer un escaneo básico de puertos con nmap
 nmap -p- --open --min-rate 5000 -vvv -n -Pn 10.129.182.216 -oG allPorts
 ```
 
-![[ 20250720112643.png]]
+![[ 20250720112643.png]](grandpa-images/20250720112643.png)
 
 >haremos este formato grepeable por el motivo de que tenemos en el .zshrc una funcion llamada extractPorts (tambien de S4vitar) con la que veremos de manera sencilla los puertos, a demas que se quedaran guardados en la clipboard y sera mas sencillo el siguiente escaner con scripts>
 
@@ -20,7 +20,7 @@ nmap -p- --open --min-rate 5000 -vvv -n -Pn 10.129.182.216 -oG allPorts
 extractPorts allPorts
 ```
 
-![[ 20250720113211.png]]
+![[ 20250720113211.png]](grandpa-images/20250720113211.png)
 
 >En este caso solo es un puerto pero cuando se tratan de 5, 6 u 10 puertos abiertos esta función nos ayuda bastante a dinamizar el proceso de reconocimiento
 
@@ -30,7 +30,7 @@ seguimos con un escaneo con scripts básicos de nmap
 nmap -p80 -sCV 10.129.222.98 -oN targeted
 ```
 
-![[ 20250720113440.png]]
+![[ 20250720113440.png]](grandpa-images/20250720113440.png)
 
 aqui vemos la versión Microsoft IIS httpd 6.0
 
@@ -40,7 +40,7 @@ he explorado el puerto 80 hay bastantes html pero no hay gran cosa que poder hac
 
 Buscamos en google con el nombre del servicio y la version 
 
-![[ 20250720113746.png]]
+![[ 20250720113746.png]](grandpa-images/20250720113746.png)
 
 aqui podemos ver que la propia ia de Google reconoce la vulnerabilidad CVE-2017-7269
 
@@ -57,7 +57,7 @@ y  buscamos por la vulnerabilidad encontrada
 search CVE-2017-7269
 ```
 
-![[ 20250720113945.png]]
+![[ 20250720113945.png]](grandpa-images/20250720113945.png)
 
 como solo hay un modulo utilizaremos ese
 
@@ -91,7 +91,7 @@ run post/multi/recon/local_exploit_suggester
 
 esta herramienta viene ya instalada y nos hace un escáner de vulnerabilidades en la maquina local en este caso el Windows victima
 
-![[ 20250720112429.png]]
+![[ 20250720112429.png]](grandpa-images/20250720112429.png)
 
 
 nos da opciones a varios exploits pero seguimos estando en una configuración del sistema que nos limita asi que tendremos que migrar
@@ -104,7 +104,7 @@ usaremos `ps` para ver PID´s a los que podamos migrar y que tengan autorizacion
 ps
 ```
 
-![[ 20250720115330.png]]
+![[ 20250720115330.png]](grandpa-images/20250720115330.png)
 
 en este caso migraremos a wmiprvse.exe 
 
@@ -112,7 +112,7 @@ en este caso migraremos a wmiprvse.exe
 migrate 1884
 ```
 
-![[ 20250720115417.png]]
+![[ 20250720115417.png]](grandpa-images/20250720115417.png)
 
 una vez hemos migrado haremos un background del meterpreter para dejar la sesion suspendida y poder reutilizarla
 
@@ -123,7 +123,7 @@ background
 
 ahora utilizaremos uno de los exploits encontrados en el escáner local que hicimos antes. en este caso yo usare `exploit/windows/local/ms14_070_tcpip_ioctl`
 
-![[ 20250720115610.png]]
+![[ 20250720115610.png]](grandpa-images/20250720115610.png)
 
 modificamos:
 - SESSION - set session 1
@@ -142,7 +142,7 @@ ahora si que tendremos una shell de meterpreter con total acceso a todo el siste
 
 ## User
 
-![[ 20250720120049.png]]
+![[ 20250720120049.png]](grandpa-images/20250720120049.png)
 
 la flag de user esta en el directorio: C:\Documents and Settings\Harry\Desktop
 
@@ -150,7 +150,7 @@ user : bdff5ec67c3cff017f2bedc146a5d869
 
 ## Root
 
-![[ 20250720120210.png]]
+![[ 20250720120210.png]](grandpa-images/20250720120210.png)
 
 la flag de root esta en el directorio:  C:\Documents and Settings\Administrator\Desktop
 
