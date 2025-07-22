@@ -16,7 +16,7 @@ una vez tenemos los puertos abiertos realizamos un segundo escaneo de nmap. En e
 nmap -p80 -sCV 10.129.180.214 -oN targeted
 ```
 
-![[20250722094155.png]]
+![[20250722094155.png]](optimum-images/20250722094155.png)
 
 Aqui vemos el puerto 80 con servicio http y versión HttpFileServer httpd 2.3
 
@@ -34,7 +34,7 @@ buscamos exploits derivados del servicio HttpFileServer
 search HttpFileServer
 ```
 
-![[20250722094422.png]]
+![[20250722094422.png]](optimum-images/20250722094422.png)
 Os dejo por aqui el exploit
 ```bash
 exploit/windows/http/rejetto_hfs_exec
@@ -81,7 +81,7 @@ una vez hemos cambiado todos los parámetros necesarios lanzamos el exploit
 exploit
 ```
 
-![[20250722095036.png]]
+![[20250722095036.png]](optimum-images/20250722095036.png)
 
 recibiremos una shell como meterpreter pero como empieza a ser costumbre ya no tendremos acceso a la carpeta administrador ni a muchas partes del sistema por lo que debemos conseguir esa escalada de privilegios
 
@@ -93,7 +93,7 @@ lanzaremos este código que hará un escáner de vulnerabilidades interno en la 
 run post/multi/recon/local_exploit_suggester
 ```
 
-![[20250722095308.png]]
+![[20250722095308.png]](optimum-images/20250722095308.png)
 
 aqui nos recomendara varios exploits para realizar la escalada
 
@@ -123,7 +123,7 @@ y lanzamos el exploit
 exploit
 ```
 
-![[20250722095833.png]]
+![[20250722095833.png]](optimum-images/20250722095833.png)
 
 obtenemos la shell como meterpreter y ahora si con total privilegio
 
@@ -133,7 +133,7 @@ obtenemos la shell como meterpreter y ahora si con total privilegio
 
 la flag se encuentra en el directorio: C:\Users\kostas\Desktop
 
-![[20250722095957.png]]
+![[20250722095957.png]](optimum-images/20250722095957.png)
 
 user: 4ba9776b13b088debe39c37a2921a97e
 
@@ -141,6 +141,6 @@ user: 4ba9776b13b088debe39c37a2921a97e
 
 la flag se encuentra en el directorio: C:\Users\Administrator\Desktop
 
-![[20250722100055.png]]
+![[20250722100055.png]](optimum-images/20250722100055.png)
 
 root: 828d9f5bc4d29e410f6425e17a9a2693
