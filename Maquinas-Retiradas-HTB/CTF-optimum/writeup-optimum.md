@@ -1,5 +1,5 @@
 
-![[20250721114950.png]]
+![[20250721114950.png]](optimum-images/20250721114950.png)
 
 # Fase de reconocimiento
 
