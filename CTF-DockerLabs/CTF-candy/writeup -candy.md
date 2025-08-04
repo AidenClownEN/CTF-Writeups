@@ -1,5 +1,5 @@
 
-![[20250802134717.png]]
+![[20250802134717.png]](candy-images/20250802134717.png)
 
 
 # Fase de Reconocimiento
