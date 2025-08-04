@@ -1,5 +1,5 @@
 
-![[20250803170035.png]]
+![[20250803170035.png]](chocolate-images/20250803170035.png)
 
 # Fase de reconocimiento
 
