@@ -1,4 +1,4 @@
-![[20250812213625.png]]
+![[20250812213625.png]](veneno-images/20250812213625.png)
 # Fase de reconocimiento 
 
 empezamos con un escaneo básico de puertos con nmap 
